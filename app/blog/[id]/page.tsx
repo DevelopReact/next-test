@@ -23,9 +23,9 @@ type Props = {
   };
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = params;
-
+export async function generateMetadata({
+  params: { id }
+}: Props): Promise<Metadata> {
   const post = await getDataId(id);
 
   return {
@@ -33,9 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Post({ params }: Props) {
-  const { id } = params;
-
+export default async function Post({ params: { id } }: Props) {
   const post = await getDataId(id);
 
   return (
