@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { Metadata } from 'next';
 
 async function getDataId(id: string) {
@@ -17,14 +19,15 @@ async function getDataId(id: string) {
   return response.json();
 }
 
-type Props = Promise<{
+type Props = {
   params: {
     id: string;
   };
-}>;
+};
 
-export async function generateMetadata(params: Props): Promise<Metadata> {
-  const { id } = (await params).params;
+export async function generateMetadata({
+  params: { id }
+}: Props): Promise<Metadata> {
   const post = await getDataId(id);
 
   return {
@@ -32,8 +35,7 @@ export async function generateMetadata(params: Props): Promise<Metadata> {
   };
 }
 
-export default async function Post(params: Props) {
-  const { id } = (await params).params;
+export default async function Post({ params: { id } }: Props) {
   const post = await getDataId(id);
 
   return (
