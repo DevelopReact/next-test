@@ -1,14 +1,12 @@
-export const dynamic = 'force-dynamic';
-
 import { Metadata } from 'next';
+
+export const dynamic = 'force-dynamic';
 
 async function getDataId(id: string) {
   const response = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${id}`,
     {
-      next: {
-        revalidate: 60
-      }
+      next: { revalidate: 60 }
     }
   );
 
@@ -25,9 +23,8 @@ type Props = {
   };
 };
 
-export async function generateMetadata({
-  params: { id }
-}: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
   const post = await getDataId(id);
 
   return {
@@ -35,7 +32,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Post({ params: { id } }: Props) {
+export default async function Post({ params }: Props) {
+  const { id } = await params;
   const post = await getDataId(id);
 
   return (
